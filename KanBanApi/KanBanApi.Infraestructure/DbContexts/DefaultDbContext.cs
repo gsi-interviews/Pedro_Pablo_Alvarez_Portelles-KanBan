@@ -6,7 +6,7 @@ namespace KanBanApi.Infraestructure.DbContexts;
 
 public sealed class DefaultDbContext : IdentityDbContext<AppUser>
 {
-    public DefaultDbContext(DbContextOptions options) : base(options) { }
+    public DefaultDbContext(DbContextOptions<DefaultDbContext> options) : base(options) { }
 
     public DbSet<Todo> Todos { get; set; }
     public DbSet<TodoHistory> TodoHistories { get; set; }

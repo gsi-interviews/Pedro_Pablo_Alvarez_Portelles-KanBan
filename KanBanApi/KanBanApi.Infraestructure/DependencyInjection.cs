@@ -15,7 +15,8 @@ public static class DependencyInjection
             options.UseNpgsql(configuration.GetConnectionString("Postgres"))
         );
 
-        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>()
+                .AddScoped<IJwtGenerator, JwtGenerator>();
 
         return services;
     }

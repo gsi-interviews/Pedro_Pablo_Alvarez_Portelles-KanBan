@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KanBanApi.Application", "KanBanApi.Application\KanBanApi.Application.csproj", "{0E1A46D9-2696-4828-9D26-8AEAA0B510C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KanBanApi.Domain", "KanBanApi.Domain\KanBanApi.Domain.csproj", "{8798AE96-D1DA-4464-8031-8B5EDA4A55BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KanBanApi.Infraestructure", "KanBanApi.Infraestructure\KanBanApi.Infraestructure.csproj", "{173717D2-E40D-43AC-ACAB-CDE623085B06}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KanBanApi.WebApi", "KanBanApi.WebApi\KanBanApi.WebApi.csproj", "{31757979-764C-4992-BF18-CB47C620D2DE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0E1A46D9-2696-4828-9D26-8AEAA0B510C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E1A46D9-2696-4828-9D26-8AEAA0B510C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E1A46D9-2696-4828-9D26-8AEAA0B510C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E1A46D9-2696-4828-9D26-8AEAA0B510C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8798AE96-D1DA-4464-8031-8B5EDA4A55BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8798AE96-D1DA-4464-8031-8B5EDA4A55BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8798AE96-D1DA-4464-8031-8B5EDA4A55BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8798AE96-D1DA-4464-8031-8B5EDA4A55BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{173717D2-E40D-43AC-ACAB-CDE623085B06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{173717D2-E40D-43AC-ACAB-CDE623085B06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{173717D2-E40D-43AC-ACAB-CDE623085B06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{173717D2-E40D-43AC-ACAB-CDE623085B06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31757979-764C-4992-BF18-CB47C620D2DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31757979-764C-4992-BF18-CB47C620D2DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31757979-764C-4992-BF18-CB47C620D2DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31757979-764C-4992-BF18-CB47C620D2DE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

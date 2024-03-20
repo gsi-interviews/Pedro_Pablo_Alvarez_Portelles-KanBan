@@ -1,8 +1,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
 using KanBanApi.Infraestructure.DbContexts;
+using KanBanApi.Application.Services;
+using KanBanApi.Infraestructure.Services;
 
 namespace KanBanApi.Infraestructure.DependencyInjection;
 
@@ -13,6 +14,8 @@ public static class DependencyInjection
         services.AddDbContext<DefaultDbContext>(options =>
             options.UseNpgsql(configuration.GetConnectionString("Postgres"))
         );
+
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;
     }

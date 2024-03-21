@@ -14,13 +14,13 @@ public class ListTodosCommandHandler(IUnitOfWork _unitOfWork, IActiveSession _ac
         if (userId is null) ThrowError("No valid active user");
 
         var includes = new Expression<Func<Todo, object>>[] { i => i.TodoList! };
-        var filters = new Expression<Func<Todo, bool>>[] { f => f.OwnerId == userId };
+        var filters = new List<Expression<Func<Todo, bool>>> { f => f.OwnerId == userId };
 
-        if (command.ListName != null) filters.Append(f => f.TodoList!.ListName == command.ListName);
-        if (command.DueDate != null) filters.Append(f => f.DueDate! <= command.DueDate);
+        if (command.ListName != null) filters.Add(f => f.TodoList!.ListName == command.ListName);
+        if (command.DueDate != null) filters.Add(f => f.DueDate! <= command.DueDate);
 
         var todoRepo = _unitOfWork.GetRepository<Todo>();
-        var todos = (await todoRepo.GetAllListOnlyAsync(filters: filters))
+        var todos = (await todoRepo.GetAllListOnlyAsync(filters: filters.ToArray()))
                                    .Select(x => new TodoResponse(x.Id.ToString(), x.Status.ToString(), x.Title, x.Message, x.DueDate, x.TodoList!.ListName))
                                    .ToArray();
 

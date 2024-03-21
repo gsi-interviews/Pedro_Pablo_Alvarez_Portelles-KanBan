@@ -38,9 +38,24 @@ builder.Services.AddAuthorization();
 builder.Services.AddFastEndpoints()
                 .SwaggerDocument();
 
+builder.Services.AddCors(opt =>
+{
+    opt.AddPolicy("AllowLocalhostPolicy", bld =>
+    {
+        bld.AllowAnyOrigin()
+           .AllowAnyMethod()
+           .AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
 
-app.UseFastEndpoints();
+app.UseFastEndpoints(opt =>
+{
+    opt.Endpoints.RoutePrefix = "api";
+});
+
+app.UseCors("AllowLocalhostPolicy");
 
 if (app.Environment.IsDevelopment()) app.UseSwaggerGen();
 

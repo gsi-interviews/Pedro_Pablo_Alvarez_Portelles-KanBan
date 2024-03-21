@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace KanBanApi.Infraestructure.Migrations.Postgres
 {
     [DbContext(typeof(DefaultDbContext))]
-    [Migration("20240321000453_InitMigration")]
+    [Migration("20240321025711_InitMigration")]
     partial class InitMigration
     {
         /// <inheritdoc />
@@ -31,7 +31,7 @@ namespace KanBanApi.Infraestructure.Migrations.Postgres
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateOnly>("DueDate")
+                    b.Property<DateOnly?>("DueDate")
                         .HasColumnType("date");
 
                     b.Property<string>("Message")
@@ -49,7 +49,7 @@ namespace KanBanApi.Infraestructure.Migrations.Postgres
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("TodoListId")
+                    b.Property<Guid?>("TodoListId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
@@ -310,9 +310,7 @@ namespace KanBanApi.Infraestructure.Migrations.Postgres
 
                     b.HasOne("KanBanApi.Domain.Entities.TodoList", "TodoList")
                         .WithMany()
-                        .HasForeignKey("TodoListId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TodoListId");
 
                     b.Navigation("Owner");
 

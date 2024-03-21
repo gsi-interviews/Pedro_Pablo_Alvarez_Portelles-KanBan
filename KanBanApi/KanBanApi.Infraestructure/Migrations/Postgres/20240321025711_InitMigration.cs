@@ -176,10 +176,10 @@ namespace KanBanApi.Infraestructure.Migrations.Postgres
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Title = table.Column<string>(type: "text", nullable: false),
                     Message = table.Column<string>(type: "text", nullable: false),
-                    DueDate = table.Column<DateOnly>(type: "date", nullable: false),
+                    DueDate = table.Column<DateOnly>(type: "date", nullable: true),
                     Status = table.Column<int>(type: "integer", nullable: false),
                     OwnerId = table.Column<string>(type: "text", nullable: false),
-                    TodoListId = table.Column<Guid>(type: "uuid", nullable: false)
+                    TodoListId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -194,8 +194,7 @@ namespace KanBanApi.Infraestructure.Migrations.Postgres
                         name: "FK_Todos_TodoLists_TodoListId",
                         column: x => x.TodoListId,
                         principalTable: "TodoLists",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(

@@ -1,22 +1,20 @@
 using FastEndpoints;
+using KanBanApi.Application.Commands.Register;
+using KanBanApi.Application.Dtos;
 
 namespace KanBanApi.WebApi.Endpoints;
 
-public class A
-{
-    public string Message { get; set; } = null!;
-}
 
-public class RegisterEndpoint : EndpointWithoutRequest<A>
+public class RegisterEndpoint : Endpoint<RegisterCommand, UserReponse>
 {
     public override void Configure()
     {
-        Get("/");
+        Post("/auth/register");
         AllowAnonymous();
     }
 
-    public override Task<A> ExecuteAsync(CancellationToken ct)
+    public override async Task<UserReponse> ExecuteAsync(RegisterCommand req, CancellationToken ct)
     {
-        return Task.FromResult(new A { Message = "Hello world" });
+        return await req.ExecuteAsync(ct);
     }
 }

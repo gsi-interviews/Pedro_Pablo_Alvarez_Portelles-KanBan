@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace KanBanApi.Infraestructure.Migrations.Postgres
 {
     [DbContext(typeof(DefaultDbContext))]
-    [Migration("20240321025711_InitMigration")]
+    [Migration("20240321035638_InitMigration")]
     partial class InitMigration
     {
         /// <inheritdoc />
@@ -70,6 +70,12 @@ namespace KanBanApi.Infraestructure.Migrations.Postgres
                     b.Property<string>("Message")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<DateTime>("Modified")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Title")
                         .IsRequired()

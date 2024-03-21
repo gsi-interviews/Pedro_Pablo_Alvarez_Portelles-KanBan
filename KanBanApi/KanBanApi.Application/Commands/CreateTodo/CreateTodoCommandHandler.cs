@@ -74,12 +74,12 @@ public class CreateTodoCommandHandler(IUnitOfWork _unitOfWork, IActiveSession _a
         }
     }
 
-    private string? GetListName(string message)
+    private string GetListName(string message)
     {
         var regex = new Regex("\\+[A-Za-z0-9]+");
         var matches = regex.Matches(message);
 
-        if (matches.Count != 1) return null;
+        if (matches.Count != 1) return "Default";
 
         return matches.First().Value.Substring(1).ToLower();
     }

@@ -204,6 +204,8 @@ namespace KanBanApi.Infraestructure.Migrations.Postgres
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Title = table.Column<string>(type: "text", nullable: false),
                     Message = table.Column<string>(type: "text", nullable: false),
+                    Status = table.Column<int>(type: "integer", nullable: false),
+                    Modified = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     TodoId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>

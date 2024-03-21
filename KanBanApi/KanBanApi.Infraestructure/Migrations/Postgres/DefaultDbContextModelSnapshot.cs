@@ -28,7 +28,7 @@ namespace KanBanApi.Infraestructure.Migrations.Postgres
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateOnly>("DueDate")
+                    b.Property<DateOnly?>("DueDate")
                         .HasColumnType("date");
 
                     b.Property<string>("Message")
@@ -46,7 +46,7 @@ namespace KanBanApi.Infraestructure.Migrations.Postgres
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("TodoListId")
+                    b.Property<Guid?>("TodoListId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
@@ -67,6 +67,12 @@ namespace KanBanApi.Infraestructure.Migrations.Postgres
                     b.Property<string>("Message")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<DateTime>("Modified")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -307,9 +313,7 @@ namespace KanBanApi.Infraestructure.Migrations.Postgres
 
                     b.HasOne("KanBanApi.Domain.Entities.TodoList", "TodoList")
                         .WithMany()
-                        .HasForeignKey("TodoListId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TodoListId");
 
                     b.Navigation("Owner");
 

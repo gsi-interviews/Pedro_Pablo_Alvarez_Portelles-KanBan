@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Identity;
 
 namespace KanBanApi.Application.Commands.Login;
 
-public class LoginCommandHandler(UserManager<IdentityUser> _userManager, IJwtGenerator _jwtGenerator) : CommandHandler<LoginCommand, UserReponse>
+public class LoginCommandHandler(UserManager<IdentityUser> _userManager, IJwtGenerator _jwtGenerator) : CommandHandler<LoginCommand, UserResponse>
 {
-    public override async Task<UserReponse> ExecuteAsync(LoginCommand command, CancellationToken ct = default)
+    public override async Task<UserResponse> ExecuteAsync(LoginCommand command, CancellationToken ct = default)
     {
         var user = await _userManager.FindByNameAsync(command.Username);
 
@@ -16,6 +16,6 @@ public class LoginCommandHandler(UserManager<IdentityUser> _userManager, IJwtGen
         if (!await _userManager.CheckPasswordAsync(user, command.Password))
             ThrowError("Wrong Password");
 
-        return new UserReponse(user.Id, user.UserName!, _jwtGenerator.GetToken(user));
+        return new UserResponse(user.Id, user.UserName!, _jwtGenerator.GetToken(user));
     }
 }

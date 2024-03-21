@@ -23,7 +23,8 @@ public static class DependencyInjection
                 .AddEntityFrameworkStores<DefaultDbContext>();
 
         services.AddScoped<IUnitOfWork, UnitOfWork>()
-                .AddScoped<IJwtGenerator, JwtGenerator>();
+                .AddScoped<IJwtGenerator, JwtGenerator>()
+                .AddScoped<IActiveSession, ActiveSession>();
 
         return services;
     }

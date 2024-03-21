@@ -5,7 +5,7 @@ using KanBanApi.Application.Dtos;
 namespace KanBanApi.WebApi.Endpoints;
 
 
-public class RegisterEndpoint : Endpoint<RegisterCommand, UserReponse>
+public class RegisterEndpoint : Endpoint<RegisterCommand, UserResponse>
 {
     public override void Configure()
     {
@@ -13,7 +13,7 @@ public class RegisterEndpoint : Endpoint<RegisterCommand, UserReponse>
         AllowAnonymous();
     }
 
-    public override async Task<UserReponse> ExecuteAsync(RegisterCommand req, CancellationToken ct)
+    public override async Task<UserResponse> ExecuteAsync(RegisterCommand req, CancellationToken ct)
     {
         return await req.ExecuteAsync(ct);
     }

@@ -4,7 +4,7 @@ using KanBanApi.Application.Dtos;
 
 namespace KanBanApi.WebApi.Endpoints;
 
-public class LoginEndpoint : Endpoint<LoginCommand, UserReponse>
+public class LoginEndpoint : Endpoint<LoginCommand, UserResponse>
 {
     public override void Configure()
     {
@@ -12,7 +12,7 @@ public class LoginEndpoint : Endpoint<LoginCommand, UserReponse>
         AllowAnonymous();
     }
 
-    public override async Task<UserReponse> ExecuteAsync(LoginCommand req, CancellationToken ct)
+    public override async Task<UserResponse> ExecuteAsync(LoginCommand req, CancellationToken ct)
     {
         return await req.ExecuteAsync(ct);
     }

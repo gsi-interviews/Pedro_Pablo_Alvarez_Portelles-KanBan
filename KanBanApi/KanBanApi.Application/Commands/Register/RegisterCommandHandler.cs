@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Identity;
 
 namespace KanBanApi.Application.Commands.Register;
 
-public class RegisterCommandHandler(UserManager<IdentityUser> _userManager, IJwtGenerator _jwtGenerator) : CommandHandler<RegisterCommand, UserReponse>
+public class RegisterCommandHandler(UserManager<IdentityUser> _userManager, IJwtGenerator _jwtGenerator) : CommandHandler<RegisterCommand, UserResponse>
 {
-    public override async Task<UserReponse> ExecuteAsync(RegisterCommand command, CancellationToken ct = default)
+    public override async Task<UserResponse> ExecuteAsync(RegisterCommand command, CancellationToken ct = default)
     {
         var user = await _userManager.FindByNameAsync(command.Username) ??
                    await _userManager.FindByEmailAsync(command.Username);
@@ -19,6 +19,6 @@ public class RegisterCommandHandler(UserManager<IdentityUser> _userManager, IJwt
 
         if (!result.Succeeded) ThrowError("Error while creating user, try again later");
 
-        return new UserReponse(user.Id, user.UserName, _jwtGenerator.GetToken(user));
+        return new UserResponse(user.Id, user.UserName, _jwtGenerator.GetToken(user));
     }
 }

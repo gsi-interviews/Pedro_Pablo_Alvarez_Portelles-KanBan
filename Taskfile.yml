@@ -13,3 +13,6 @@ tasks:
   migrate:
     cmds:
       - dotnet ef database update --project ./KanBanApi/KanBanApi.Infraestructure --startup-project ./KanBanApi/KanBanApi.WebApi --context DefaultDbContext
+  run:
+    cmds:
+      - dotnet run --project ./KanBanApi/KanBanApi.WebApi

@@ -1,5 +1,6 @@
 using System.Text;
 using FastEndpoints;
+using FastEndpoints.Swagger;
 using KanBanApi.Infraestructure.DbContexts;
 using KanBanApi.Infraestructure.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -34,10 +35,13 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization();
 
-builder.Services.AddFastEndpoints();
+builder.Services.AddFastEndpoints()
+                .SwaggerDocument();
 
 var app = builder.Build();
 
 app.UseFastEndpoints();
+
+if (app.Environment.IsDevelopment()) app.UseSwaggerGen();
 
 app.Run();

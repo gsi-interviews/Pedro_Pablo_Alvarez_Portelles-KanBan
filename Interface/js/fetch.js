@@ -1,7 +1,7 @@
 async function fetchData(url, method, jwtToken, bodyData) {
     const headers = new Headers();
     
-    if (method !== "GET") headers.append('Content-Type', 'application/json');
+    if (method !== "GET" && method !== "DELETE") headers.append('Content-Type', 'application/json');
 
     if (jwtToken !== null) headers.append('Authorization', `Bearer ${jwtToken}`);
 
@@ -11,7 +11,7 @@ async function fetchData(url, method, jwtToken, bodyData) {
 
     };
 
-    if (method !== "GET") requestOptions.body = JSON.stringify(bodyData);
+    if (method !== "GET" && method !== "DELETE") requestOptions.body = JSON.stringify(bodyData);
     else requestOptions.body = null;
 
     try {

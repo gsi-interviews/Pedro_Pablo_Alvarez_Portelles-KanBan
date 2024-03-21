@@ -43,35 +43,37 @@ async function createTodo(title, message) {
 
 async function refreshAllTodos(todoList, doingList, reviewList, doneList, listName, dueDate) {
 
-    // try {
-    let url = `${apiUrl}/todos`;
+    try {
+        let url = `${apiUrl}/todos`;
 
-    if (listName || dueDate) url += "?";
-    if (listName) url += `listName=${listName}`;
-    if (listName && dueDate) url += "&";
-    if (dueDate) url += `dueDate=${dueDate}`;
+        if (listName || dueDate) url += "?";
+        if (listName) url += `listName=${listName}`;
+        if (listName && dueDate) url += "&";
+        if (dueDate) url += `dueDate=${dueDate}`;
 
-    const todosData = await fetchData(url, 'GET', localStorage.getItem("jwt"), null);
-    if (todosData.statusCode == 401) window.location.replace("login.html");
+        const todosData = await fetchData(url, 'GET', localStorage.getItem("jwt"), null);
+        if (todosData.statusCode == 401) window.location.replace("login.html");
 
-    fillList(todoList, todosData.todo);
-    fillList(doingList, todosData.doing);
-    fillList(reviewList, todosData.review);
-    fillList(doneList, todosData.done);
-    // }
-    // catch { window.location.replace("login.html"); }
+        fillList(todoList, todosData.todo);
+        fillList(doingList, todosData.doing);
+        fillList(reviewList, todosData.review);
+        fillList(doneList, todosData.done);
+    }
+    catch { window.location.replace("login.html"); }
 }
 
 async function fillList(list, todoData) {
     list.replaceChildren();
 
     todoData.forEach(async function (todo) {
-        const todoElement = await createTodoItem(todo.id, todo.title, todo.message, todo.dueDate, todo.listName);
+        const todoElement = await createTodoItem(todo.id, todo.title, todo.message, todo.dueDate, todo.list);
         list.appendChild(todoElement);
     });
 }
 
 async function createTodoItem(id, title, message, dueDate, listName) {
+    if (!dueDate) dueDate = "No due date";
+    if (!listName) listName = "No list";
     const htmlStr =
         `<div class="container border rounded my-2" id="todo-${id}">
         <div class="d-flex justify-content-between dashed-bottom">
@@ -91,10 +93,10 @@ async function createTodoItem(id, title, message, dueDate, listName) {
                             data-bs-toggle="collapse" data-bs-target="move-todo-options-${id}">Move
                             to...</span>
                         <div class="side-menu">
-                            <span class="cursor-pointer" id="move-to-backlog-${id}">ToDo</span>
-                            <span class="cursor-pointer" id="move-to-doing-${id}">Doing</span>
-                            <span class="cursor-pointer" id="move-to-review-${id}">Review</span>
-                            <span class="cursor-pointer" id="move-to-done-${id}">Done</span>
+                            <span class="cursor-pointer" id="move-to-backlog-${id}" name="move-to-backlog-${id}">ToDo</span>
+                            <span class="cursor-pointer" id="move-to-doing-${id}" name="move-to-doing-${id}">Doing</span>
+                            <span class="cursor-pointer" id="move-to-review-${id}" name="move-to-review-${id}">Review</span>
+                            <span class="cursor-pointer" id="move-to-done-${id}" name="move-to-done-${id}">Done</span>
                         </div>
                     </div>
                 </div>
@@ -139,17 +141,38 @@ async function createTodoItem(id, title, message, dueDate, listName) {
         frag.appendChild(temp.firstChild);
     }
 
+    const newTitleInput = frag.getElementById(`edit-todo-title-${id}`);
+    const newMessageInput = frag.getElementById(`edit-todo-message-${id}`);
+
     frag.getElementById(`edit-todo-btn-${id}`).addEventListener("click", async function () {
-        console.log();
-        const newTitle = frag.getElementById(`edit-todo-title-${id}`).value;
-        const newMessage = frag.getElementById(`edit-todo-message-${id}`).value;
+        const newTitle = newTitleInput.value;
+        const newMessage = newMessageInput.value;
+
+        await editTodo(id, newTitle, newMessage);
+    });
+
+    frag.getElementById(`delete-todo-${id}`).addEventListener("click", async function () {
+        deleteTodo(id);
+    });
+
+    frag.getElementById(`move-to-backlog-${id}`).addEventListener("click", async function () {
+        await editTodoStatus(id, "Todo");
+    });
+    frag.getElementById(`move-to-doing-${id}`).addEventListener("click", async function () {
+        await editTodoStatus(id, "Doing");
+    });
+    frag.getElementById(`move-to-review-${id}`).addEventListener("click", async function () {
+        await editTodoStatus(id, "Review");
+    });
+    frag.getElementById(`move-to-done-${id}`).addEventListener("click", async function () {
+        await editTodoStatus(id, "Done");
     });
 
     return frag;
 }
 
 async function editTodo(id, newTitle, newMessage) {
-    const result = await fetchData(`${apiUrl}/todos/${id}`, "POST", localStorage.getItem("jwt"), {
+    const result = await fetchData(`${apiUrl}/todos/${id}`, "PATCH", localStorage.getItem("jwt"), {
         title: newTitle,
         message: newMessage
     });
@@ -157,6 +180,26 @@ async function editTodo(id, newTitle, newMessage) {
     if (result.statusCode == 401) window.location.replace("login.html");
 
     else if (result.statusCode != 200) alert(result);
+
+    else window.location.reload();
+}
+
+async function editTodoStatus(id, status) {
+    const result = await fetchData(`${apiUrl}/todos/${id}`, "PATCH", localStorage.getItem("jwt"), {
+        status: status
+    });
+
+    if (result.statusCode == 401) window.location.replace("login.html");
+
+    else if (result.statusCode != 200) alert(result);
+
+    else window.location.reload();
+}
+
+async function deleteTodo(id) {
+    const result = await fetchData(`${apiUrl}/todos/${id}`, "DELETE", localStorage.getItem("jwt"), null);
+
+    if (result.statusCode == 401) window.location.replace("login.html");
 
     else window.location.reload();
 }

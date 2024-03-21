@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using KanBanApi.Infraestructure.DbContexts;
 using KanBanApi.Application.Services;
 using KanBanApi.Infraestructure.Services;
-using KanBanApi.Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 
 namespace KanBanApi.Infraestructure.DependencyInjection;
 
@@ -18,7 +18,8 @@ public static class DependencyInjection
                               mig => mig.MigrationsAssembly("KanBanApi.Infraestructure"));
         });
 
-        services.AddDefaultIdentity<AppUser>()
+        services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<DefaultDbContext>();
 
         services.AddScoped<IUnitOfWork, UnitOfWork>()

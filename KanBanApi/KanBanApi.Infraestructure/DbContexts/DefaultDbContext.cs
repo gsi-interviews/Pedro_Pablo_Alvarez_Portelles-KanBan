@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KanBanApi.Infraestructure.DbContexts;
 
-public sealed class DefaultDbContext : IdentityDbContext<AppUser>
+public sealed class DefaultDbContext : IdentityDbContext
 {
     public DefaultDbContext(DbContextOptions<DefaultDbContext> options) : base(options) { }
 

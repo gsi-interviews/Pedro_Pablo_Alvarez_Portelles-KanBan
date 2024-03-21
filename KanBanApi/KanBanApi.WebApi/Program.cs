@@ -1,10 +1,13 @@
 using System.Text;
 using FastEndpoints;
+using KanBanApi.Infraestructure.DbContexts;
 using KanBanApi.Infraestructure.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSingleton(builder.Configuration);
 
 builder.Services.AddInfraestructure(builder.Configuration);
 
@@ -35,6 +38,6 @@ builder.Services.AddFastEndpoints();
 
 var app = builder.Build();
 
-
+app.UseFastEndpoints();
 
 app.Run();

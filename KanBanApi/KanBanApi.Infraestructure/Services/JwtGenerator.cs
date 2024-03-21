@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using KanBanApi.Application.Services;
 using KanBanApi.Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
@@ -17,7 +18,7 @@ public sealed class JwtGenerator : IJwtGenerator
         _configuration = configuration;
     }
 
-    public string GetToken(AppUser user)
+    public string GetToken(IdentityUser user)
     {
         var issuer = _configuration["Jwt:Issuer"];
         var audience = _configuration["Jwt:Audience"];

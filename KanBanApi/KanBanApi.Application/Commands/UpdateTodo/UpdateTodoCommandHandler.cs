@@ -34,7 +34,8 @@ public class UpdateTodoCommandHandler(IUnitOfWork _unitOfWork, IActiveSession _a
             Title = todo.Title,
             Message = todo.Title,
             TodoId = todo.Id,
-            Modified = DateTime.UtcNow
+            Modified = DateTime.UtcNow,
+            Status = todo.Status
         });
 
         var listName = todo.TodoList?.ListName;

@@ -84,7 +84,7 @@ async function createTodoItem(id, title, message, dueDate, listName) {
                     aria-haspopup="true" aria-expanded="false" />
 
                 <div class="dropdown-menu" id="todo-options-${id}">
-                    <!-- span class="dropdown-item cursor-pointer" id="show-todo-details-${id}">Details</span -->
+                    <span class="dropdown-item cursor-pointer" id="show-todo-change-log-${id}">Change Log</span>
                     <span class="dropdown-item cursor-pointer" id="edit-todo-${id}" data-bs-toggle="modal" data-bs-target="#modalId-${id}">Edit</span>
                     <span class="dropdown-item cursor-pointer" id="delete-todo-${id}">Delete</span>
                     <hr class="dropdown-divider">
@@ -131,7 +131,6 @@ async function createTodoItem(id, title, message, dueDate, listName) {
                 </div>
             </div>
         </div>
-    </div>
     </div>`;
 
     let frag = document.createDocumentFragment(),
@@ -168,6 +167,20 @@ async function createTodoItem(id, title, message, dueDate, listName) {
         await editTodoStatus(id, "Done");
     });
 
+    frag.getElementById(`show-todo-change-log-${id}`).addEventListener("click", async function () {
+        const modal = new bootstrap.Modal(document.getElementById("todo-details-modal"), {});
+        const modalChangeLog = document.getElementById("change-log-modal");
+        const todoData = await getTodoHistory(id);
+
+        modalChangeLog.replaceChildren();
+
+        todoData.forEach(async function (todo) {
+            modalChangeLog.append(await createTodoItemSimple(todo.id, todo.title, todo.message, todo.dueDate, todo.list, todo.status));
+        });
+
+        modal.show();
+    });
+
     return frag;
 }
 
@@ -202,4 +215,39 @@ async function deleteTodo(id) {
     if (result.statusCode == 401) window.location.replace("login.html");
 
     else window.location.reload();
+}
+
+async function getTodoHistory(id) {
+    let url = `${apiUrl}/todo-history/${id}`;
+
+    const todosData = await fetchData(url, 'GET', localStorage.getItem("jwt"), null);
+
+    if (todosData.statusCode == 401) window.location.replace("login.html");
+
+    return todosData;
+}
+
+async function createTodoItemSimple(id, title, message, dueDate, listName, status) {
+    if (!dueDate) dueDate = "No due date";
+    if (!listName) listName = "No list";
+    const htmlStr =
+        `<div class="container border rounded my-2" id="todo-${id}">
+        <div class="d-flex justify-content-between dashed-bottom">
+            <div class="todo-title">${title}</div>
+        </div>
+        <div class="todo-content">${message}</div>
+        <hr>
+        <div class="todo-content text-success">${listName}</div>
+        <div class="todo-content text-purple">${dueDate}</div>
+        <div class="todo-content text-purple">${status}</div>
+    </div>`;
+
+    let frag = document.createDocumentFragment(),
+        temp = document.createElement('div');
+    temp.innerHTML = htmlStr;
+    while (temp.firstChild) {
+        frag.appendChild(temp.firstChild);
+    }
+
+    return frag;
 }

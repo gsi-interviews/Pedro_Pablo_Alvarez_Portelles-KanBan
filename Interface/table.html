@@ -27,12 +27,13 @@
         </div>
 
         <div class="d-flex justify-content-end" id="navbarNav">
-            <div class="nav-item border rounded px-2 py-2 mx-2" onclick="localStorage.clear();window.location.replace('login.html');">
+            <div class="nav-item border rounded px-2 py-2 mx-2"
+                onclick="localStorage.clear();window.location.replace('login.html');">
                 <a class="nav-link" href="#">LogOut</a>
             </div>
         </div>
     </nav>
-    
+
     <div class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
         aria-labelledby="modalTitleId" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
@@ -56,7 +57,7 @@
             </div>
         </div>
     </div>
-        
+
 
     <div class="collapse" id="collapse-menu">
         <div class="container-fluid row my-2">
@@ -79,7 +80,8 @@
                             <input type="date" name="due-date-filter" id="due-date-filter" class="form-control"
                                 style="width: 17em; height: 2.3em;" placeholder="Due date">
                         </div>
-                        <input type="button" value="Filter" class="form-control" style="width: 5em; height: 2.3em;" id="filter-btn">
+                        <input type="button" value="Filter" class="form-control" style="width: 5em; height: 2.3em;"
+                            id="filter-btn">
                     </form>
                 </div>
             </div>
@@ -123,6 +125,32 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal trigger button -->
+
+    <!-- Modal Body -->
+    <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+    <div class="modal fade" id="todo-details-modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
+        aria-labelledby="modalTitleId" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitleId">
+                        Modal title
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="change-log-modal"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="button" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 
 </html>

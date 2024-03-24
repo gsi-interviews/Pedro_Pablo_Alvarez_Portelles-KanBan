@@ -1,7 +1,7 @@
 using System.Text;
 using FastEndpoints;
 using FastEndpoints.Swagger;
-using KanBanApi.Infraestructure.DbContexts;
+using KanBanApi.Application.Dtos;
 using KanBanApi.Infraestructure.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -48,7 +48,15 @@ builder.Services.AddCors(opt =>
     });
 });
 
+var googleConfig = new GoogleConfigDto(builder.Configuration["Google:ClientId"]!,
+                                       builder.Configuration["Google:ClientSecret"]!);
+
+builder.Services.AddSingleton(googleConfig);
+
 var app = builder.Build();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseFastEndpoints(opt =>
 {

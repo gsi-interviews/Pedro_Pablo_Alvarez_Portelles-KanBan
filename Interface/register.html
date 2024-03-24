@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <meta name="Cross-Origin-Opener-Policy" content="same-origin-allow-popups">
     <link rel="stylesheet" href="css/styles.css" />
     <script src="js/settings.js"></script>
     <script src="js/fetch.js"></script>
@@ -50,11 +52,36 @@
         </div>
         <hr>
         <div class="container-fluid d-flex justify-content-center">
-            <input type="image" src="img/google-color-svgrepo-com.svg" alt="Start with google." height="40"
-                class="start-with-google-btn" title="Start with google." data-bs-toggle="tooltip"
-                data-bs-toggle="tooltip">
+            <div id="g_id_onload"
+                data-client_id="533870940971-78t3p152v5m57doqqnac1sr975uhts8j.apps.googleusercontent.com"
+                data-context="signin" data-ux_mode="popup" data-callback="handleCredentialResponse"
+                data-auto_prompt="false">
+            </div>
+
+            <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline"
+                data-text="signup_with" data-size="large" data-logo_alignment="left">
+            </div>
         </div>
     </div>
+
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script>
+        async function handleCredentialResponse(response) {
+            try {
+                const resp = await fetchData(`${apiUrl}/auth/google-signin/${response.credential}`, "GET", null, null);
+                
+                if (resp.statusCode == 200) {
+                    localStorage.setItem("jwt", resp.token);
+                    window.location.replace("table.html");
+                }
+
+                else alert(resp);
+            }
+            catch{
+                alert("Some error occurred!!!");
+            }
+        }
+    </script>
 </body>
 
 </html>

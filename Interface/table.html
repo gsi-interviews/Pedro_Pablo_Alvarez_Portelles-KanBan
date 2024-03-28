@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <script src="js/fetch.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/script.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-light bg-light d-flex justify-content-between">
+        <div class="d-flex">
+            <a class="navbar-brand" href="#">
+                <img src="img/icons8-todo-list-100.png" width="50" height="50" class="d-inline-block align-text-top"
+                    alt="Logo" />
+            </a>
+            <div class="navbar-brand my-auto">KanBan</div>
+        </div>
+
+        <div class="d-flex justify-content-end" id="navbarNav">
+            <div class="nav-item border rounded px-2 py-2 mx-2"
+                onclick="localStorage.clear();window.location.replace('login.html');">
+                <a class="nav-link" href="#">LogOut</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
+        aria-labelledby="modalTitleId" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitleId">
+                        Create todo
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" placeholder="Title" class="form-control my-2" id="new-todo-title">
+                    <input type="text" placeholder="Message" class="form-control my-2" id="new-todo-message">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="button" class="btn btn-primary" id="create-todo-btn">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="collapse" id="collapse-menu">
+        <div class="container-fluid row my-2">
+            <div style="border-right: solid 1px rgb(154, 152, 152);"
+                class="px-3 col-md-2 d-flex justify-content-center">
+                <input type="image" src="img/add-circle-svgrepo-com.svg" alt="New todo." height="50"
+                    class="add-todo-btn" data-bs-toggle="modal" data-bs-target="#modalId">
+            </div>
+            <div class="px-3 py-0 col-md-10">
+                <div class="container-fluid row">
+                    <img src="img/filter-svgrepo-com.svg" height="40" alt="filter" class="my-2 col-md-1">
+                    <form id="filters" class="container-fluid col-md-11 d-flex justify-content-between py-2">
+                        <div class="d-flex">
+                            <label for="list-name-filter" class="py-1 px-1">List Name</label>
+                            <input type="text" name="list-name-filter" id="list-name-filter" class="form-control"
+                                style="width: 17em; height: 2.3em;" placeholder="List name">
+                        </div>
+                        <div class="d-flex">
+                            <label for="due-date-filter" class="py-1 px-1">Due Date</label>
+                            <input type="date" name="due-date-filter" id="due-date-filter" class="form-control"
+                                style="width: 17em; height: 2.3em;" placeholder="Due date">
+                        </div>
+                        <input type="button" value="Filter" class="form-control" style="width: 5em; height: 2.3em;"
+                            id="filter-btn">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid d-flex justify-content-center">
+        <input type="image" src="img/down-circle-svgrepo-com.svg" height="20" alt="Open menu." data-bs-toggle="collapse"
+            data-bs-target="#collapse-menu" aria-expanded="false" aria-controls="collapse-menu" id="menu-open-btn"
+            class="rotation-idle" />
+    </div>
+
+    <div class="container-fluid d-flex justify-content-center" style="padding: 0;min-height: 20em;">
+        <div class="row container border rounded" id="lists-container" style="padding: 0;">
+            <div class="col-md-3 px-2 py-2 my-2 mx-0" id="backlog-list">
+                <div class="text-center list-name dashed-bottom" style="color: rgb(192, 57, 91)">
+                    ToDo
+                </div>
+
+                <div class="container-fluid" id="backlog-list-container"></div>
+            </div>
+            <div class="col-md-3 px-2 py-2 my-2 mx-0" id="doing-list"
+                style="border-left: solid 1px rgba(194, 194, 194, 0.667);">
+                <div class="text-center list-name dashed-bottom" style="color: rgb(192, 192, 57)">
+                    Doing
+                </div>
+                <div class="container-fluid" id="doing-list-container"></div>
+            </div>
+            <div class="col-md-3 px-2 py-2 my-2 mx-0" id="review-list"
+                style="border-left: solid 1px rgba(194, 194, 194, 0.667);">
+                <div class="text-center list-name dashed-bottom" style="color: rgb(57, 170, 192)">
+                    Review
+                </div>
+                <div class="container-fluid" id="review-list-container"></div>
+            </div>
+            <div class="col-md-3 px-2 py-2 my-2" id="done-list"
+                style="border-left: solid 1px rgba(194, 194, 194, 0.667);">
+                <div class="text-center list-name dashed-bottom" style="color: rgb(57, 192, 104)">
+                    Done
+                </div>
+                <div class="container-fluid" id="done-list-container"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal trigger button -->
+
+    <!-- Modal Body -->
+    <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+    <div class="modal fade" id="todo-details-modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
+        aria-labelledby="modalTitleId" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitleId">
+                        Modal title
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="change-log-modal"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="button" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

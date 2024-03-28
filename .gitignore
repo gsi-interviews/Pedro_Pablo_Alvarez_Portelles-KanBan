@@ -3,9 +3,6 @@
 ##
 ## Get latest from `dotnet new gitignore`
 
-# mockups
-interface-mockup
-
 # dotenv files
 .env
 

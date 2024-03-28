@@ -1,0 +1,18 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  GREETING: Hello, World!
+
+tasks:
+  add-migrations: 
+    cmds:
+      # - dotnet ef migrations remove --project ./KanBanApi/KanBanApi.Infraestructure --startup-project ./KanBanApi/KanBanApi.WebApi
+      - dotnet ef migrations add "InitMigration" --project ./KanBanApi/KanBanApi.Infraestructure --startup-project ./KanBanApi/KanBanApi.WebApi --context DefaultDbContext --output-dir Migrations/Postgres
+  migrate:
+    cmds:
+      - dotnet ef database update --project ./KanBanApi/KanBanApi.Infraestructure --startup-project ./KanBanApi/KanBanApi.WebApi --context DefaultDbContext
+  run:
+    cmds:
+      - dotnet run --project ./KanBanApi/KanBanApi.WebApi
